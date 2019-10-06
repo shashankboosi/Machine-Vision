@@ -4,6 +4,9 @@ import cv2
 # Read an image
 inputImage = cv2.imread('../Images/Oil-Paint/flower.jpg', cv2.IMREAD_COLOR)
 
+if inputImage is None:
+    exit('Please check the file location correctly!')
+
 # Display the image
 cv2.imshow('Original Image', inputImage)
 cv2.waitKey(0)
