@@ -38,5 +38,3 @@ finalConvolvedImage = cv2.filter2D(originalImagePixels, -1, LaplacianApproximate
 
 cv2.imshow('Final image', finalConvolvedImage)
 cv2.imwrite('../OutputImages/ConvolvedImage.jpg', finalConvolvedImage)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
