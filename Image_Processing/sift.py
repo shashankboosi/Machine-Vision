@@ -71,7 +71,7 @@ def get_img_center(image):
 if __name__ == '__main__':
     # Read image with OpenCV and convert to grayscale
     # Also add any picture from the directory Machine-Vision/Images and check the Image similarities
-    OriginalImage = cv2.imread("../Images/road_sign.jpg")
+    OriginalImage = cv2.imread("../Images/Sift/road_sign.jpg")
     gray_image = cv2.cvtColor(OriginalImage, cv2.COLOR_BGR2GRAY)
 
     # Initialize SIFT detector
@@ -102,5 +102,5 @@ if __name__ == '__main__':
         # cv.drawMatchesKnn expects list of lists as matches.
         img3 = cv2.drawMatchesKnn(gray_image, kp1, gray_image_1, kp2, good, None,
                                   flags=cv2.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
-        file_extensions = '../OutputImages/Road-Sign-OriginalImage{}.jpg'.format(angle)
+        file_extensions = '../OutputImages/Sift/Road-Sign-OriginalImage{}.jpg'.format(angle)
         cv2.imwrite(file_extensions, img3)
