@@ -26,8 +26,8 @@ for size in windowSize:
         for j in range(inputImage.shape[1]):
             paddedImage = cv2.copyMakeBorder(inputImage, border, border, border, border, cv2.BORDER_REFLECT_101)
             windowImage = paddedImage[i: i + size[0], j: j + size[1]]
-            hist = np.argmax(np.ravel(cv2.calcHist([windowImage], [0], None, [256], [0, 256])))
-            outputImage[i][j] = hist
+            histMax = np.argmax(np.ravel(cv2.calcHist([windowImage], [0], None, [256], [0, 256])))
+            outputImage[i][j] = histMax
 
     # Store the images by writing it the directory
     file_extensions = '../OutputImages/Oil-Paint/flowerFilterWithSize{}.png'.format(size[0])
