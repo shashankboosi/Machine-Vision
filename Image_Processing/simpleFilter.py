@@ -1,8 +1,9 @@
+# The logic to the code is written by sboosi
 import numpy as np
 import cv2
 
 # Read an image
-inputImage = cv2.imread('../Images/Oil-Paint/Flower/flower.jpg', cv2.IMREAD_COLOR)
+inputImage = cv2.imread('../Images/Oil-Paint/rail/light_rail.jpg', cv2.IMREAD_COLOR)
 
 if inputImage is None:
     exit('Please check the file location correctly!')
@@ -12,15 +13,12 @@ cv2.imshow('Original Image', inputImage)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
 
-# print image dimension
-print(inputImage.shape)
-
 # Splitting the image to B, G, R
 b, g, r = cv2.split(inputImage)
 print(b.shape)
 
 # Initialize the GrayImage pixels to the dimensions of the original image
-grayImage = np.zeros((inputImage.shape[0], inputImage.shape[1]), dtype=np.uint8)
+grayImage = np.empty((inputImage.shape[0], inputImage.shape[1]), dtype=np.uint8)
 
 # Create a new image from the original image using the transformation equation
 for i in range(inputImage.shape[0]):
@@ -31,4 +29,4 @@ for i in range(inputImage.shape[0]):
 outputGrayImage = np.round_(grayImage, decimals=0)
 
 # Store the image by writing it to the images directory
-cv2.imwrite('../OutputImages/Oil-Paint/Flower/grayImageFlowerOutput.png', outputGrayImage)
+cv2.imwrite('../OutputImages/Oil-Paint/rail/grayImageRailOutput.jpg', outputGrayImage)
