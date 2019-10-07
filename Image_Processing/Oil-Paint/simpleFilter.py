@@ -3,7 +3,7 @@ import numpy as np
 import cv2
 
 # Read an image
-inputImage = cv2.imread('../Images/Oil-Paint/rail/light_rail.jpg', cv2.IMREAD_COLOR)
+inputImage = cv2.imread('../../Images/Oil-Paint/rail/light_rail.jpg', cv2.IMREAD_COLOR)
 
 if inputImage is None:
     exit('Please check the file location correctly!')
@@ -29,4 +29,4 @@ for i in range(inputImage.shape[0]):
 outputGrayImage = np.round_(grayImage, decimals=0)
 
 # Store the image by writing it to the images directory
-cv2.imwrite('../OutputImages/Oil-Paint/rail/grayImageRailOutput.jpg', outputGrayImage)
+cv2.imwrite('../../OutputImages/Oil-Paint/rail/grayImageRailOutput.jpg', outputGrayImage)

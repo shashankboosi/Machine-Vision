@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 
 # Read the image
-inputOriginalImage = cv2.imread('../Images/Oil-Paint/rail/light_rail.jpg', cv2.IMREAD_COLOR)
+inputOriginalImage = cv2.imread('../../Images/Oil-Paint/rail/light_rail.jpg', cv2.IMREAD_COLOR)
 if inputOriginalImage is None:
     exit('Please check the file location correctly!')
 # Convert BGR to RGB
@@ -16,7 +16,7 @@ cv2.waitKey(0)
 cv2.destroyAllWindows()
 
 # Read the gray scale image
-inputGreyScaleFilteredImage = cv2.imread('../Images/Oil-Paint/rail/railFilterWithSize5.jpg', cv2.IMREAD_GRAYSCALE)
+inputGreyScaleFilteredImage = cv2.imread('../../Images/Oil-Paint/rail/railFilterWithSize5.jpg', cv2.IMREAD_GRAYSCALE)
 if inputGreyScaleFilteredImage is None:
     exit('Please check the file location correctly!')
 
@@ -73,5 +73,5 @@ for i in range(inputGreyScaleFilteredImage.shape[0]):
 mergedOutputImage = cv2.merge((outputBImage, outputGImage, outputRImage))
 
 # Store the images by writing it the directory
-file_extensions = '../OutputImages/Oil-Paint/rail/railOilPaintForWindow5WithSize{}.jpg'.format(size[0])
+file_extensions = '../../OutputImages/Oil-Paint/rail/railOilPaintForWindow5WithSize{}.jpg'.format(size[0])
 cv2.imwrite(file_extensions, mergedOutputImage)

@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 
 # Read the image
-inputImage = cv2.imread('../Images/Oil-Paint/rail/grayImageRailOutput.jpg', cv2.IMREAD_GRAYSCALE)
+inputImage = cv2.imread('../../Images/Oil-Paint/rail/grayImageRailOutput.jpg', cv2.IMREAD_GRAYSCALE)
 
 print(inputImage.shape)
 if inputImage is None:
@@ -29,5 +29,5 @@ for size in windowSize:
             outputImage[i][j] = histMax
 
     # Store the images by writing it the directory
-    file_extensions = '../OutputImages/Oil-Paint/rail/railFilterWithSize{}.jpg'.format(size[0])
+    file_extensions = '../../OutputImages/Oil-Paint/rail/railFilterWithSize{}.jpg'.format(size[0])
     cv2.imwrite(file_extensions, outputImage)
