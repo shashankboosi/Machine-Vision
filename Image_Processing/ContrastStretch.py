@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-image = cv2.imread("../Images/ansel_adams.jpg")
+image = cv2.imread("../Images/Contrast-Stretch/ansel_adams.jpg")
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
 originalImagePixels = np.array(gray)
@@ -37,4 +37,4 @@ LaplacianApproximateKernel = np.array([[0, -1, 0],
 finalConvolvedImage = cv2.filter2D(originalImagePixels, -1, LaplacianApproximateKernel)
 
 cv2.imshow('Final image', finalConvolvedImage)
-cv2.imwrite('../OutputImages/ConvolvedImage.jpg', finalConvolvedImage)
+cv2.imwrite('../OutputImages/Contrast-Stretch/ConvolvedImage.jpg', finalConvolvedImage)
