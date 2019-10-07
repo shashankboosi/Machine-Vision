@@ -18,13 +18,11 @@ cv2.destroyAllWindows()
 windowSize = [[5, 5], [15, 15], [25, 25]]
 for size in windowSize:
     # Calculate the border sizes to be padded in all the directions
-    print(size[0])
     border = int(size[0] / 2)
     paddedImage = cv2.copyMakeBorder(inputImage, border, border, border, border, cv2.BORDER_REFLECT_101)
     outputImage = np.copy(inputImage)
     # Operation to use the window sizes and perform filtering
     for i in range(inputImage.shape[0]):
-        print(i)
         for j in range(inputImage.shape[1]):
             windowImage = paddedImage[i: i + size[0], j: j + size[1]]
             histMax = np.argmax(cv2.calcHist([windowImage], [0], None, [256], [0, 256]))

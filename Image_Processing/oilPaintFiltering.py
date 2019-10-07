@@ -2,7 +2,6 @@
 import cv2
 import numpy as np
 
-
 # Read the image
 inputOriginalImage = cv2.imread('../Images/Oil-Paint/rail/light_rail.jpg', cv2.IMREAD_COLOR)
 if inputOriginalImage is None:
@@ -48,9 +47,7 @@ paddedGrayImage = make_border(inputGreyScaleFilteredImage, border)
 
 # Operation to use the window sizes and perform filtering
 for i in range(inputGreyScaleFilteredImage.shape[0]):
-    print(i)
     for j in range(inputGreyScaleFilteredImage.shape[1]):
-
         windowGrayImage = paddedGrayImage[i: i + size[0], j: j + size[1]]
         center = windowGrayImage[border, border]
         RIntensities = 0
@@ -78,4 +75,3 @@ mergedOutputImage = cv2.merge((outputBImage, outputGImage, outputRImage))
 # Store the images by writing it the directory
 file_extensions = '../OutputImages/Oil-Paint/rail/railOilPaintForWindow5WithSize{}.jpg'.format(size[0])
 cv2.imwrite(file_extensions, mergedOutputImage)
-
