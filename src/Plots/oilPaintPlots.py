@@ -2,11 +2,11 @@
 from matplotlib import pyplot as plt
 import cv2
 
-dogInputFiles = ['../OutputImages/Oil-Paint/dog/dogFilterWithSize5.jpg',
-                 '../OutputImages/Oil-Paint/dog/dogFilterWithSize15.jpg',
-                 '../OutputImages/Oil-Paint/dog/dogFilterWithSize25.jpg']
+dogInputFiles = ['../../OutputImages/Oil-Paint/dog/dogFilterWithSize5.jpg',
+                 '../../OutputImages/Oil-Paint/dog/dogFilterWithSize15.jpg',
+                 '../../OutputImages/Oil-Paint/dog/dogFilterWithSize25.jpg']
 
-outputFiles = '../OutputImages/Oil-Paint/plots/combinedGrayDogImageWithAll3Filters.png'
+outputFiles = '../../OutputImages/Oil-Paint/plots/combinedGrayDogImageWithAll3Filters.png'
 
 # Show the images of all the dog filters used for oil-paint filtering
 for i in range(len(dogInputFiles)):
