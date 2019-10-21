@@ -53,6 +53,7 @@ coverage.xml
 
 # Pycharm stuff:
 .idea/
+Images/IDRiD/
 
 # Django stuff:
 *.log
