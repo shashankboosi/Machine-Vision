@@ -1,7 +1,6 @@
 import torch
 import pandas as pd
 from sklearn import preprocessing
-import numpy as np
 import matplotlib.pyplot as plt
 
 # Load data(do not change)
@@ -68,7 +67,6 @@ def PlotLearningCurve(epoch, trainingloss, testingloss):
     plt.ylabel('Loss')
     plt.savefig('../OutputImages/Deep_Learning/lossvsepochs.png')
     plt.show()
-
 
 
 # ----- Main Function ----- #
