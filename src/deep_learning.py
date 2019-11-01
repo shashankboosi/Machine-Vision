@@ -49,11 +49,8 @@ class mymodel(torch.nn.Module):
 
 # Define our model
 model = mymodel()
-# Define your learning rate
 learning_rate = 0.01
-# Define your optimizer
 optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
-# Define your loss function
 criterion = torch.nn.NLLLoss()
 
 
@@ -78,29 +75,20 @@ for epoch in range(1, epochs + 1):
     model.train()
     # step one : fit your model by using training data and get predict label
     output = model(train_X_tensor)
-    # step two: calculate your training loss
     loss = criterion(output, train_Y_tensor)
-    # step three: calculate backpropagation
     optimizer.zero_grad()
-    # step four: update parameters
     loss.backward()
-    # step five: reset our optimizer
     optimizer.step()
-    # step six: store your training loss
     trainingloss += loss.item(),
     # step seven: evaluation your model by using testing data and get the accuracy
     correct = 0
     with torch.no_grad():
         total = 0
         model.eval()
-        # predict testing data
         output_test = model(test_X_tensor)
-        # calculate your testing loss
         loss = criterion(output_test, test_Y_tensor)
-        # store your testing loss
         testingloss += loss.item(),
         if epoch % 10 == 0:
-            # get labels with max values
             _, predicted = torch.max(output_test, 1)
             total += test_Y_tensor.size(0)
             correct += (predicted == test_Y_tensor).sum().item()
