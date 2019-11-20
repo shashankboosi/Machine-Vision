@@ -11,8 +11,13 @@
 \usepackage{array}
 \usepackage{float}
 \usepackage[utf8x]{inputenc}
-% correct bad hyphenation here
-\hyphenation{op-tical net-works semi-conduc-tor}
+
+\makeatletter
+\def\endthebibliography{%
+  \def\@noitemerr{\@latex@warning{Empty `thebibliography' environment}}%
+  \endlist
+}
+\makeatother
 
 \author{
     \IEEEauthorblockN{Shashank Reddy B\IEEEauthorrefmark{1}}
@@ -65,7 +70,7 @@ Though there is no known particular cause for accumulating of M-protein, the stu
 \par
 Machine Learning techniques have now been used both to classify different kinds of cancers which are morphologically indistinguishable and to predict response to therapy. In this paper, we discuss the possible Machine Learning techniques to predict the risk of progression of MGUS which has caused death in many people. Empirical results suggested that 10-fold cross validation may provide better accuracy estimates than the more common leave one out cross validation. We evaluate and compare each model against a set of metrics, resulted through the analysis of data from the MGUS data-set. The features that are included in the data set are age, sex, hgb (haemoglobin) etc. The data-set is explained in the Section \ref{ssec:describe}. Through this analysis using machine learning, can help in diagnosis of a patient. This method efficiently finds out if the progression of MGUS is probable for a certain case.
 
-\section{Related Works}
+\section{Background}
 \par
 Patients with MGUS are at increased risk for progression to multiple myeloma or a related plasma-cell cancer. The risk of progression of MGUS to multiple myeloma or related disorders is about 1\% per year. \cite{monoclonal1,monoclonal2} In a comparison of patients with various monoclonal protein values, in which 0.5 g per deciliter or less was used as a reference value, it is found that the initial concentration of monoclonal protein was a statistically significant predictor of progression to multiple myeloma.
 
@@ -76,12 +81,12 @@ The etiology of MGUS remains unclear and it is a current topic of investigation.
 \section{Method}                                                                     
 Fig. \ref{fig:flowchart} shows us an overview of the methodology pipeline. Our methodology consists of various steps: data pre-processing, feature selection, feature scaling and classification where we start with preparing the dataset, cleaning, training, fine tuning the algorithm, model training and testing. The data-set is taken from UCI\cite{uci}. We use scikit-learn \cite{scikit} and pandas library for all the steps involved in the methodology. Section \ref{ssec:describe} to section \ref{ssec:classification} consist of detailed information of the steps.     
 \par              
-\begin{figure*}[t]
-	\centering
-	\includegraphics[scale=0.7]{../Images/gammo.png}
-	\caption{Methodology Pipeline Overview}
-	\label{fig:flowchart}
-\end{figure*}
+%\begin{figure*}[t]
+%	\centering
+%	\includegraphics[scale=0.7]{../Images/gammo.png}
+%	\caption{Methodology Pipeline Overview}
+%	\label{fig:flowchart}
+%\end{figure*}
 
 \subsection{Data Description}
 \label{ssec:describe}
@@ -169,21 +174,21 @@ Decision tree is a, supervised learning algorithm, which is widely used classifi
 
 When applied directly, Decision Tree causes the overfitting on \cite{monoclonal1} and not being generalized well to the new data. Therefore we pre-pruned the tree by setting the maximum depth $max_{depth}$ parameter to 3 as seen from \cite{dt}. Thus decreasing overfitting by limiting the depth. We observed a decrease in accuracy on the training set, but a significant increase in accuracy of test data. The feature importance plot of the decision tree classifier as shown in the figure \ref{feature_dtc} is given by,
 
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=3.5in]{../Images/images/feature_dtc.png}
-	\caption{Feature Importance plot of Decision Tree Classifier}	
-	\label{feature_dtc}
-\end{figure}
+%\begin{figure}[h!]
+%	\centering
+%	\includegraphics[width=3.5in]{../Images/images/feature_dtc.png}
+%	\caption{Feature Importance plot of Decision Tree Classifier}	
+%	\label{feature_dtc}
+%\end{figure}
 Information Gain and Gini Index are the two attribute selection measures used for selecting which attribute can be considered as the root node at each level. Figure \ref{gini} shows use the visualization of how gini index acts on the data-set.
 
 %Addition of the data
-\begin{figure*}[h!]
-	\centering
-	\includegraphics[scale=0.4]{../Images/dtree2.png}
-	\caption{Visualization of Decision Tree Classifier using the gini index selection measure}	
-	\label{gini}
-\end{figure*}
+%\begin{figure*}[h!]
+%	\centering
+%	\includegraphics[scale=0.4]{../Images/dtree2.png}
+%	\caption{Visualization of Decision Tree Classifier using the gini index selection measure}	
+%	\label{gini}
+%\end{figure*}
 
 \subsubsection*{K - Nearest Neighbor}
 K Nearest neighbors is a classification algorithm that is used for regression predictive problems. As seen from \cite{knn}, building the model will only store the training data set. Only if a new input is chosen, it predicts and finds the closest data points in the training data: \textit{nearest neighbor}. KNN is commonly used for its easy of interpretation and minimal calculation time.
@@ -192,12 +197,12 @@ The figure below shows the training and test data accuracy on the y-axis against
 
 
 %Figure of KNN
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=3.5in]{../Images/images/knn1.png}
-	\caption{Accuracies of KNN on train and test data}
-	\label{fig:knn}
-\end{figure}
+%\begin{figure}[h!]
+%	\centering
+%	\includegraphics[width=3.5in]{../Images/images/knn1.png}
+%	\caption{Accuracies of KNN on train and test data}
+%	\label{fig:knn}
+%\end{figure}
 \par
 Figure \ref{fig:knn} indicates us to choose 17 or 18 neighbors. In our case K=17 neighbors has produced an accuracy of 81.2\% while K=13 neighbors has produced an accuracy of 82.3\%.
 
