@@ -46,10 +46,34 @@ def get_command_line_args():
 # image_pixels = np.array(util.read_images_from_folder(original_image_dir, original_image_extension_type))
 #
 # print(image_pixels.shape)
+def resize(img):
+    width = 1024
+    height = 720
+    #####
+    return cv2.resize(img, (width, height), interpolation=cv2.INTER_CUBIC)
+
+
+def getROI(image):
+    image_resized = resize(image)
+    b, g, r = cv2.split(image_resized)
+    g = cv2.GaussianBlur(g, (15, 15), 0)
+    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (15, 15))
+    g = ndimage.grey_opening(g, structure=kernel)
+    (minVal, maxVal, minLoc, maxLoc) = cv2.minMaxLoc(g)
+
+    x0 = int(maxLoc[0]) - 110
+    y0 = int(maxLoc[1]) - 110
+    x1 = int(maxLoc[0]) + 110
+    y1 = int(maxLoc[1]) + 110
+
+    return image_resized[y0:y1, x0:x1]
+
 
 # Get a single image
-single_image = np.array(util.read_image(os.path.join(util.get_original_images_dir(), 'IDRiD_01.jpg'), 1))
+single_image = np.array(util.read_image(os.path.join(util.get_original_images_dir(), 'IDRiD_03.jpg'), 1))
 im = single_image.copy()
+roi_region = getROI(single_image)
+util.save_image('roi', roi_region)
 print(single_image.shape)
 gray = cv2.cvtColor(single_image, cv2.COLOR_BGR2GRAY)
 util.save_image('gray', gray)
@@ -66,11 +90,24 @@ elif type is "gaussian":
 else:
     exit("Please check the blur types we support for the optic segmentation")
 
-gray = cv2.addWeighted(gray, 0.8, blur, 0.1, 0)
+gray = cv2.addWeighted(gray, 1.6, blur, -0.5, 0)
+img = cv2.erode(gray, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (31, 31)), iterations=3)
+img = cv2.dilate(img, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (31, 31)), iterations=2)
+util.save_image('closing', img)
+img = cv2.equalizeHist(img)
+util.save_image('hist', img)
+# home = cv2.morphologyEx(gray, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (31, 31)))
+# mask1 = cv2.Canny(home, 100, 300)
+# util.save_image('canny1', mask1)
+# mask1 = cv2.GaussianBlur(mask1, (1, 1), 0)
+# mask1 = cv2.Canny(mask1, 100, 300)
+# util.save_image('morph', home)
+# util.save_image('canny2', mask1)
+
 util.save_image('gaussian_weighted', gray)
-(minVal, maxVal, minLoc, maxLoc) = cv2.minMaxLoc(gray)
+(minVal, maxVal, minLoc, maxLoc) = cv2.minMaxLoc(img)
 print(maxVal, maxLoc)
-util.save_image('circle', cv2.circle(single_image, maxLoc, 5, (255, 0, 0), 2))
+util.save_image('circle', cv2.circle(single_image, maxLoc, 250, (128, 240, 75), 5))
 
 # display the results of the naive attempt
 util.save_image('Naive', single_image)
