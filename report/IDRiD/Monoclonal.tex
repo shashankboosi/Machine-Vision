@@ -73,15 +73,7 @@ Patients with MGUS are at increased risk for progression to multiple myeloma or 
 
 The etiology of MGUS remains unclear and it is a current topic of investigation. Race seems to play a role given the observation that prevalence of MGUS is 2 to 3-fold higher in African-Americans and blacks from Africa compared with whites. \cite{monoclonal6, monoclonal7} Other identified risk factors for MGUS include older age, male sex, exposure to pesticides, and family history of MGUS or MM \cite{monoclonal9,monoclonal10,monoclonal11}. Thus, previous studies support a role for both genetic and environmental factors in the development of multiple myeloma and its precursor states. \cite{monoclonal12}
 
-\par
-
-A significant increase of the monoclonal protein or development of myeloma, macroglobulinemia or amyloidosis occurred in 18 \% of the patients with monoclonal immunoglobulin G (IgG), in 28\% with immunoglobulin A (IgA) and in 25\% with immunoglobulin M (IgM). \cite{monoclonal2} Two independent studies have demonstrated that most cases of multiple myeloma are preceded by MGUS. Among 71 patients who during a 10-year follow-up time developed multiple myeloma, serum samples consistently demonstrated MGUS in the years before the malignant diagnosis. \cite{monoclonal13} Another study, based on the Department of Defense Serum Repository, showed a very similar finding. \cite{monoclonal14}
-
-\par
-
-When different presenting features were analyzed for predictive value of the malignant transformation, the IgA type of MGUS was the only variable associated with a higher probability of such an event (P less than 0.025). \cite{monoclonal4} The relative risks of developing MM are the following: 2.4 for each 1 g/dL increase of IgG, serum MC, 3.5 for detectable light chain proteinuria, 4.4 for the increase of 1 unit in log. BMPC percentage, 6.1 for age \textgreater \hspace{0.1cm}  70, 3.6 and 13.1 for a reduction in one or two polyclonal Ig. In conclusion, a study allowed the identification of a particular subset of MGUS patients at very low-risk of evolution, who can be considered as having benign monoclonal gammopathy. \cite{monoclonal5}
-
-\section{Methodology}                                                                     
+\section{Method}                                                                     
 Fig. \ref{fig:flowchart} shows us an overview of the methodology pipeline. Our methodology consists of various steps: data pre-processing, feature selection, feature scaling and classification where we start with preparing the dataset, cleaning, training, fine tuning the algorithm, model training and testing. The data-set is taken from UCI\cite{uci}. We use scikit-learn \cite{scikit} and pandas library for all the steps involved in the methodology. Section \ref{ssec:describe} to section \ref{ssec:classification} consist of detailed information of the steps.     
 \par              
 \begin{figure*}[t]
@@ -171,42 +163,6 @@ Support Vector Machines(SVM) are the supervised learning models that are used fo
 \par
 The following kernels and its accuracies that are used for our data are listed in the Table \ref{table:svm}. As we can see Radial Basis Function(RBF) kernel fits the data better than other experimented kernels because it has proved to be a generalizer for many data-sets and in many experiments it is assumed as priors for uncertain situations. RBF is also called squared exponential kernel or gaussian kernel.            
 
-\subsubsection*{Linear Discriminant Analysis}
-Linear Discriminant Analysis(LDA) is a generalization of fisher's linear discriminant, a method in statistics and Machine Learning used to find a linear combination of features that are characterized by many classes of objects. LDA \cite{lda}, can also be used for dimensionality reduction before classification. It is similar to analysis of variance(ANOVA) and principal component analysis(PCA) where it tries to attempt one dependent variable as a linear combination of other features.
-\par
-Many different solvers which are used as the characteristic roots of discriminant functions. We used the solvers: \textit{svd},  \textit{lsqr}, \textit{eigen} which are used for classification purpose.
-
-\begin{table}[ht]
-\centering
- \begin{tabular}{|c| c c|} 
- \hline
- \thead{Solver}  & \thead{Train \\ Accuracy} & \thead{Test \\ Accuracy} \\ [0.5ex] 
- \hline
- Singular value decomposition(svd) & 0.781 & 0.812\\ 
-
- Least Squared Solution(lsqr) & 0.781 & 0.812\\
- 
- Eigenvalue Decomposition(eigen) & 0.786 & 0.815\\
- \hline
-\end{tabular}
-\vspace*{0.25cm}
-\caption{LDA Discriminant Functions and their accuracies}
-\label{table:lda}
-\end{table}
-
-Table \ref{table:lda}, describes the solvers and their accuracies with all the solvers giving a good performance measure because of their ability to classify well on the data.
-\subsubsection*{Logistic Regression}
-
-Logistic Regression is a supervised learning algorithm which develops a model that predicts the binary value of a target. It uses a logistic function named as 'sigmoid' function that helps to determine the relationship between categorically dependent and one or more independent variables \cite{lr}.
-\par
-The regularization parameter ‘C’ passed to the model is a hyper-parameter that can be tweaked accordingly for the best performance. The values of ‘C’ can be like 0.01, 1, 100 etc. While ‘1’ being the default value of the parameter ‘C’. Stronger regularization (C=0.001) pushes the coefficients more towards zero. Figure \ref{fig:lr} shows us the coefficient magnitudes for different regularizations when applied on different features.
-\begin{figure}[ht]
-	\centering
-	\includegraphics[width=3.5in]{../Images/images/log_coef.png}
-	\caption{Coefficient magnitudes for different values on Logistic Regression}
-	\label{fig:lr}
-\end{figure}
-
 \subsubsection*{Decision Tree Classifier}
 Decision tree is a, supervised learning algorithm, which is widely used classifier. Unlike Naïve Bayes, Logistic regression and other algorithms that belong to the supervised learning algorithm family, it can be used for solving both regression and classification problems. Even when the dataset has missing values, using Decision tree could result in a better output.
 \par
@@ -229,43 +185,6 @@ Information Gain and Gini Index are the two attribute selection measures used fo
 	\label{gini}
 \end{figure*}
 
-\subsubsection*{Naive Bayes}
-Naive Bayes, a highly scalable algorithm which is a special case of Bayesian Network where it is assumed that all the features are independent given the class label. Presence or absence of one feature will not influence the presence or absence of other features. Given a class label $C$, the relationship between conditionally independent data $x_i$ can be given by the formula,
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=3.5in]{../Images/images/nb.png}
-	\label{fig:nb}
-\end{figure}
-%Formula
-\par
-The algorithm predicts the class of a previously unseen test case $X={x_1, x_2... x_n}$ by choosing the class that maximizes the above equation. In practice the predictor prior probability p(x) can be omitted because the classification focuses on choosing the class that maximizes the equation. From \cite{nb} we can say that, one of the advantages of the NB classifier is that it requires only few amounts of training data to estimate the class variables needed for classification. It is one of the popular choices for text classification, binary and multi-class classification problems.
-
-\subsubsection*{Random Forest Classifier}
-Random Forest, similar to Decision Tree Classifier can be used for solving both regression and classification problems. It is an ensemble learning model. \cite{rf}  The algorithm creates forest with a number of Decision Trees. More the trees in the forest, higher the accuracy of the classifier. 
-\par
-
-The algorithms gives importance to certain features to make a prediction. Not all the attributes are considered equal and thus the result vary for different data-sets. The randomness in building the random forest forces the algorithm to consider many possible explanations. Thus result of random forest captures a much broader picture of the data than a single tree. The feature Importance plot of the random forest classifier in figure \ref{rfc}, is given by, 
-%
-\begin{figure}[ht!]
-	\centering
-	\includegraphics[width=3.5in]{../Images/images/feature_rfc.png}
-    \caption{Feature Importance plot of Random Forest Classifier}	
-	\label{rfc}
-\end{figure}
-\par
-\begin{itemize}
-\item In this algorithm, \textbf{k} features are randomly selected from a total of \textbf{n} features.
-\item Among the \textbf{k} features, using the best split point node \textbf{d} is calculated.
-\item The node is now split into daughter nodes using the best split.
-\item The above 3 steps are iterated until \textbf{l} number of nodes are formed.
-\end{itemize}
-Repeat the above 4 steps \textbf{m} times until \textbf{m} decision trees are formed. Two important features of RF are: 
-\begin{enumerate}
-\item Ability to achieve high prediction accuracy.
-\item Usability of desired capabilities.
-\end{enumerate}
-
-
 \subsubsection*{K - Nearest Neighbor}
 K Nearest neighbors is a classification algorithm that is used for regression predictive problems. As seen from \cite{knn}, building the model will only store the training data set. Only if a new input is chosen, it predicts and finds the closest data points in the training data: \textit{nearest neighbor}. KNN is commonly used for its easy of interpretation and minimal calculation time.
 \par
@@ -286,6 +205,11 @@ Figure \ref{fig:knn} indicates us to choose 17 or 18 neighbors. In our case K=17
 Thus we know how much the choice of factor \textbf{K} in the algorithm influences the outcome. The boundary becomes smoother with the increasing value of \textbf{K}. The training accuracy and test accuracy are the two parameters needed to access on different K-value, as shown the plot figure. The accuracy of KNN classifier significantly increases by increasing the number of data rows in the training set.
 
 
+
+\section{Experiment}
+
+%Pipeline
+%Explain pipeline
 \subsection{Metrics}
 \label{sec:metrics}
 The combination of all the steps are evaluated under different performance metrics, including accuracy, precision, recall and F-score for the binary classification. The metrics are defined as following,
@@ -308,7 +232,8 @@ Accuracy = \frac{1}{n}\sum\limits_{i=1}^{n} \frac{|X_i \cap Y_i|}{|X_i \cup Y_i|
 
 where $X_i$ is the set of predicted labels, $Y_i$ is the set of true labels and n is the number of samples.
 
-\section{Results and Analysis}
+
+\section{Results and Discussion}
 Table \ref{table:1} shows us the model performance for all the algorithms we have experimented. The metrics used for evaluation are accuracy, precision, recall and $F_1$-score as shown in the section \ref{sec:metrics}. As we can see, the comparison between the algorithms helped us understand the nature of the algorithm as well as the data used, based on the metrics. The accuracies of all the other algorithms are close to each other by a fraction of percentage as they are tweaked to get the best accuracy using kernels, solvers and hyper-parameters. Except Naive Bayes all the accuracies of other algorithms are above 80\%. 
 \par
 The highest accuracy was achieved by Support Vector Machine with the radial basis function as the kernel. Its accuracy is 82.6\%. Therefore, the data is non-linear and it takes the form of probabilistic density function which has a global maximum. The lowest accuracy is achieved by Gaussian Naive Bayes but the difference in accuracies between the highest and lowest is only 2.9\%. When we consider the data to be linear, the accuracy falls below 60\%. Finally, the overall precision, recall and $F_1$-score for the algorithms are similar for many cases with the highest achieved by Support Vector Machine.
@@ -394,13 +319,6 @@ The performance measures for prediction when the output labels is \textbf{1} is 
 \caption{Performance Measures of the prediction when deaths label value is \textbf{1}}
 \label{table:3}
 \end{table}
-
-
-\section{Conclusion and Future Work}
-In this paper, the problem of summarizing different algorithms of Machine Learning used for the prediction of deaths due to Monoclonal Gammopathy is discussed. The focus is mainly on using different algorithms to effectively predict the deaths due to MGUS \cite{monoclonal1} . For prediction we used a refined version of the data-set with 9 attributes that are produced after applying a few data mining techniques. The outcome of the predictive results on the same data-set reveals that Support Vector Machine has outperformed all the other algorithms in terms   of accuracy, precision, recall and $F_1$-score with a score of 82.6, 83, 83, 82 \% respectively. The second conclusion gives us an intuition of how the output labels affect the metrics, by analyzing it in detail on the output labels.
-\par 
-The proposed work can be enhanced by expanding its scope of prediction by using  the deep learning techniques \cite{dl,dl2}  like Artificial  Deep Neural Networks, Multi-perceptron etc.,
-which have been proven to have increased the performance of many data-sets due to its nature of deep computation.
 
 \bibliographystyle{IEEEtran}
 \bibliography{references}
