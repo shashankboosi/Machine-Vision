@@ -47,36 +47,19 @@ def get_command_line_args():
 #
 # print(image_pixels.shape)
 def resize(img):
-    width = 1024
-    height = 720
+    width = int(img.shape[1] / 4)
+    height = int(img.shape[0] / 4)
     #####
     return cv2.resize(img, (width, height), interpolation=cv2.INTER_CUBIC)
 
 
-def getROI(image):
-    image_resized = resize(image)
-    b, g, r = cv2.split(image_resized)
-    g = cv2.GaussianBlur(g, (15, 15), 0)
-    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (15, 15))
-    g = ndimage.grey_opening(g, structure=kernel)
-    (minVal, maxVal, minLoc, maxLoc) = cv2.minMaxLoc(g)
-
-    x0 = int(maxLoc[0]) - 110
-    y0 = int(maxLoc[1]) - 110
-    x1 = int(maxLoc[0]) + 110
-    y1 = int(maxLoc[1]) + 110
-
-    return image_resized[y0:y1, x0:x1]
-
-
 # Get a single image
-single_image = np.array(util.read_image(os.path.join(util.get_original_images_dir(), 'IDRiD_03.jpg'), 1))
-im = single_image.copy()
-roi_region = getROI(single_image)
-util.save_image('roi', roi_region)
-print(single_image.shape)
+# Row * Column shape is 2848 * 4288
+single_image = np.array(util.read_image(os.path.join(util.get_original_images_dir(), 'IDRiD_10.jpg'), 1))
+image_copy = single_image.copy()
+# roi_region = getROI(single_image)
+# util.save_image('roi', roi_region)
 gray = cv2.cvtColor(single_image, cv2.COLOR_BGR2GRAY)
-util.save_image('gray', gray)
 
 # Add the blurring used before doing the edge detection
 type = "gaussian"
@@ -90,12 +73,48 @@ elif type is "gaussian":
 else:
     exit("Please check the blur types we support for the optic segmentation")
 
-gray = cv2.addWeighted(gray, 1.6, blur, -0.5, 0)
-img = cv2.erode(gray, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (31, 31)), iterations=3)
-img = cv2.dilate(img, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (31, 31)), iterations=2)
-util.save_image('closing', img)
-img = cv2.equalizeHist(img)
-util.save_image('hist', img)
+weighted_image = cv2.addWeighted(gray, 1.6, blur, -0.5, 0)
+eroded_image = cv2.erode(weighted_image, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (31, 31)), iterations=3)
+diluted_image = cv2.dilate(eroded_image, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (31, 31)), iterations=1)
+preprocessed_image = cv2.equalizeHist(diluted_image)
+(minVal, maxVal, minLoc, maxLoc) = cv2.minMaxLoc(preprocessed_image)
+print(maxVal, maxLoc)
+
+# Cut the image to get the optic disk portion of it
+shift_equal = 510
+if int(maxLoc[0]) - shift_equal >= 0:
+    x0 = int(maxLoc[0]) - shift_equal
+else:
+    x0 = 0
+if int(maxLoc[1]) - shift_equal >= 0:
+    y0 = int(maxLoc[1]) - shift_equal
+else:
+    y0 = 0
+if int(maxLoc[0]) + shift_equal <= 4288:
+    x1 = int(maxLoc[0]) + shift_equal
+else:
+    x1 = 4288
+if int(maxLoc[1]) + shift_equal <= 2848:
+    y1 = int(maxLoc[1]) + shift_equal
+else:
+    y1 = 2848
+
+cropped_image = image_copy[y0:y1, x0:x1]
+util.save_image('gaussian_weighted', gray)
+util.save_image('closing', diluted_image)
+util.save_image('hist', preprocessed_image)
+util.save_image('crop_closing', cropped_image)
+util.save_image('circle', cv2.circle(single_image, maxLoc, 250, (128, 240, 75), 5))
+
+# Apply pre-processing on the retrieved optic disc image
+optic_image = cropped_image
+print(optic_image.shape)
+# r will remove the blood vessels in the optic disc
+b, g, r = cv2.split(optic_image)
+util.save_image('r', r)
+
+
+
 # home = cv2.morphologyEx(gray, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (31, 31)))
 # mask1 = cv2.Canny(home, 100, 300)
 # util.save_image('canny1', mask1)
@@ -104,22 +123,13 @@ util.save_image('hist', img)
 # util.save_image('morph', home)
 # util.save_image('canny2', mask1)
 
-util.save_image('gaussian_weighted', gray)
-(minVal, maxVal, minLoc, maxLoc) = cv2.minMaxLoc(img)
-print(maxVal, maxLoc)
-util.save_image('circle', cv2.circle(single_image, maxLoc, 250, (128, 240, 75), 5))
-
 # display the results of the naive attempt
 util.save_image('Naive', single_image)
 
 print(util.save_image('resize', util.resize(single_image)))
 # print(single_image.transpose((1, 0, 2))[0][200:500])
 
-# Row * Column shape is 2848 * 4288
-b, g, r = cv2.split(single_image)
-util.save_image('g', g)
-util.save_image('r', r)
-util.save_image('b', b)
+
 
 # for i in xrange(6):
 #     plt.subplot(2,3,i+1),plt.imshow(images[i],'gray')
