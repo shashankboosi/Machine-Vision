@@ -1,15 +1,9 @@
 import cv2
 import os
 import glob
-import csv
-
 
 def read_image(image_name, type):
     return cv2.imread(image_name, type)
-
-
-def resize(image):
-    return cv2.resize(image, (int(image.shape[1] / 4), int(image.shape[0] / 4)), interpolation=cv2.INTER_CUBIC)
 
 
 def display_image(image):
@@ -51,7 +45,10 @@ def read_images_from_folder(dir_path, image_extension_type):
     image_list = []
     image_path = os.path.join(dir_path, '*.' + image_extension_type)
     for image_file_name in glob.glob(image_path):
-        image = read_image(image_file_name, 1)
+        if image_extension_type == 'jpg':
+            image = read_image(image_file_name, 1)
+        else:
+            image = read_image(image_file_name, 0)
         if image is not None:
             image_list.append(image)
 
