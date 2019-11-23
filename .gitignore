@@ -55,6 +55,11 @@ coverage.xml
 .idea/
 Images/IDRiD/
 data/
+*.aux
+*.synctex.gz
+*.out
+*.blg
+*.bbl
 
 # Django stuff:
 *.log
