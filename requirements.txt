@@ -6,3 +6,4 @@ scipy
 scikit-image
 scikit-learn
 seaborn
+pytorch=1.3.0
