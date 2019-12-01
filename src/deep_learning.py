@@ -3,13 +3,13 @@ import pandas as pd
 from sklearn import preprocessing
 import matplotlib.pyplot as plt
 
-# Load data(do not change)
+# Load data
 data = pd.read_csv("../data/mnist_train.csv")
 train_data = data[:2000]
 test_data = data[2000:2500]
 
 # ----- Prepare Data ----- #
-# step one: preparing your data including data normalization
+# Preparing your data including data normalization
 train_X = train_data.iloc[:, 1:]
 train_Y = train_data["label"]
 test_X = test_data.iloc[:, 1:]
@@ -19,7 +19,7 @@ min_max_scaler = preprocessing.MinMaxScaler()
 train_X_data_norm = min_max_scaler.fit_transform(train_X)
 test_X_data_norm = min_max_scaler.fit_transform(test_X)
 
-# step two: transform np array to pytorch tensor
+# Transform np array to pytorch tensor
 train_X_tensor = torch.tensor(train_X_data_norm, dtype=torch.float32).reshape(-1, 1, 28, 28)
 test_X_tensor = torch.tensor(test_X_data_norm, dtype=torch.float32).reshape(-1, 1, 28, 28)
 train_Y_tensor = torch.tensor(train_Y)
@@ -73,14 +73,13 @@ testingloss = []
 epochs = 100
 for epoch in range(1, epochs + 1):
     model.train()
-    # step one : fit your model by using training data and get predict label
     output = model(train_X_tensor)
     loss = criterion(output, train_Y_tensor)
     optimizer.zero_grad()
     loss.backward()
     optimizer.step()
     trainingloss += loss.item(),
-    # step seven: evaluation your model by using testing data and get the accuracy
+    # Evaluation your model by using testing data and get the accuracy
     correct = 0
     with torch.no_grad():
         total = 0

@@ -52,55 +52,36 @@ for img_path in images:
     # Convert the image to a numpy matrix
     img_mat = np.array(img)[:, :, :3]
 
-    #
-    # +--------------------+
-    # |     Question 1     |
-    # +--------------------+
+    # --------------- Mean Shift algortithm ---------------------
 
-    # Step 1 - Extract the three RGB colour channels
-    # Hint: It will be useful to store the shape of one of the colour
-    # channels so we can reshape the flattened matrix back to this shape.
+    # Extract the three RGB colour channels
     b, g, r = cv2.split(img_mat)
 
-    # Step 2 - Combine the three colour channels by flatten each channel
+    # Combine the three colour channels by flatten each channel
     # then stacking the flattened channels together.
     # This gives the "colour_samples"
-
     colour_samples = np.stack((b.flatten(), g.flatten(), r.flatten()), axis=1)
 
-    # Step 3 - Perform Meanshift  clustering
+    # Perform Meanshift  clustering
     ms_clf = MeanShift(bin_seeding=True)
     ms_labels = ms_clf.fit_predict(colour_samples)
 
-    # Step 4 - reshape ms_labels back to the original image shape
-    # for displaying the segmentation output
+    # Reshape ms_labels back to the original image shape for displaying the segmentation output
     ms_labels = np.reshape(ms_labels, b.shape)
 
-    # %%
-    #
-    # +--------------------+
-    # |     Question 2     |
-    # +--------------------+
-    #
+    # ------------- Water Shed algortithm --------------------------
 
-    # Step 1 - Convert the image to gray scale
-    # and convert the image to a numpy matrix
+    # Convert the image to gray scale and convert the image to a numpy matrix
     img_array = cv2.cvtColor(img_mat, cv2.COLOR_BGR2GRAY)
 
-    # Step 2 - Calculate the distance transform
-    # Hint: use     ndi.distance_transform_edt(img_array)
+    # Calculate the distance transform
     distance = ndi.distance_transform_edt(img_array)
 
-    # Step 3 - Generate the watershed markers
-    # Hint: use the peak_local_max() function from the skimage.feature library
-    # to get the local maximum values and then convert them to markers
-    # using ndi.label() -- note the markers are the 0th output to this function
+    # Generate the watershed markers
     local_maximum = peak_local_max(distance, indices=False, footprint=np.ones((3, 3)))
     markers = ndi.label(local_maximum)[0]
 
-    # Step 4 - Perform watershed and store the labels
-    # Hint: use the watershed() function from the skimage.morphology library
-    # with three inputs: -distance, markers and your image array as a mask
+    # Perform watershed and store the labels
     ws_labels = watershed(-distance, markers, mask=img_array)
 
     # Display the results

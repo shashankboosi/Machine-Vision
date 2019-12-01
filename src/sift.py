@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 
+
 class SiftDetector:
     def __init__(self, norm="L2", params=None):
         self.detector = self.get_detector(params)
@@ -59,7 +60,6 @@ def rotate(image, angle):
 
 
 # Get coordinates of center point.
-#
 # image:  Image that will be rotated
 # return: (x, y) coordinates of point at center of image
 def get_img_center(image):
@@ -99,7 +99,6 @@ if __name__ == '__main__':
             if m.distance < 0.75 * n.distance:
                 good.append([m])
 
-        # cv.drawMatchesKnn expects list of lists as matches.
         img3 = cv2.drawMatchesKnn(gray_image, kp1, gray_image_1, kp2, good, None,
                                   flags=cv2.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
         file_extensions = '../OutputImages/Sift/Road-Sign-OriginalImage{}.jpg'.format(angle)
