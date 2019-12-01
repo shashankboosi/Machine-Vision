@@ -37,12 +37,15 @@ All the datasets required for other related problems are provided with the repos
 1) **Feature extraction**: Feature extraction is done using the SIFT algorithm which is a texture based feature extractor which extracts keypoints
 in an image. SIFT is applied on an Eiffel Tower image and we check how SIFT is able to match the keypoints from the original image and the rotated image.
     1) Rotated Image angle 0 degrees:
+    
         ![0-degree-rotation](OutputImages/Sift/Eiffel-Tower-OriginalImage0.jpg)
         
     2) Rotated Image angle of 45 degrees:
+    
         ![45-degree-rotation](OutputImages/Sift/Eiffel-Tower-OriginalImage45.jpg)
         
     3) Rotated Image angle of 90 degrees:
+    
         ![90-degree-rotation](OutputImages/Sift/Eiffel-Tower-OriginalImage90.jpg)
         
     Other comparisons are available in `OutputImages/Sift`
@@ -51,39 +54,47 @@ in an image. SIFT is applied on an Eiffel Tower image and we check how SIFT is a
 
 2) **Segmentation**: The segmentation algorithms that are evaluated and compared are `Water Shed` and `Means Shift` algorithm.
     1) The segmentaion results on a strawberry toy image is:
+    
         ![segmentation](OutputImages/Segmentation/strawberry.png)
         
         Other comparisons are available in `OutputImages/Segmentation`
     
     Code available at: `src/segmentation.py`
 
+3) **Pattern Recognition**: The confusion matrix for the result obtained from KNN on the `scikit-learn` digits dataset is:
 
-3) **Deep Learning**: The loss vs epochs graph for the `deep_learning` code on MNIST dataset is: 
-![learningCurve](OutputImages/Deep_Learning/lossvsepochs.png)
-    
-    Code available at: `src/deep_learning.py`
-
-4) **Pattern Recognition**: The confusion matrix for the result obtained from KNN on the `scikit-learn` digits dataset is:
 ![knn-confusion-matrix](OutputImages/Pattern_recognition/knn_confusion_matrix.png)
 
-    Code available at: `src/pattern_recognition.py`
+   Code available at: `src/pattern_recognition.py`
+    
+4) **Deep Learning**: The loss vs epochs graph for the `deep_learning` code on MNIST dataset is: 
+
+![learningCurve](OutputImages/Deep_Learning/lossvsepochs.png)
+    
+   Code available at: `src/deep_learning.py`
     
 5) **Oil Painting**: Oil painting is implemented from scratch as part of the learning process 
 of manipulating images and it is implemented on a Sydney tram image. Oil 
 painting is done on the image using different filter sizes and the results are:
+
 ![oil-paint](OutputImages/Oil-Paint/plots/combinedGrayRailImageWithAll3Filters.png)
+
+For detailed description about the project kindly look at the paper
+    `report/Oil-Paint-report.pdf` where everything about the implementation is explained.
     
-    All the codes related are available in the directory `src/Oil-Paint`.
+All the codes related are available in the directory `src/Oil-Paint`. 
 
 6) **Optic Disc Segmentation**: The Optic Disc Segmentation is evaluated on the IDRiD dataset with 54 images: 
     1) Image of a good prediction of the optic disc:
+    
         ![good-prediction](report/IDRiD/images/good.PNG)
     
     2) Image of a bad prediction of the optic disc:
+    
         ![bad-prediction](report/IDRiD/images/bad.PNG)
         
     For detailed description about the project kindly look at the paper
-    `report/IDRiD/paper.pdf` which explains the implementation in detail where it explains everthing 
+    `report/IDRiD/paper.pdf` which explains the implementation in detail and also 
     about the reasons for the prediction.
     
      All the codes related are available in the directory `src/IDRiD`.
