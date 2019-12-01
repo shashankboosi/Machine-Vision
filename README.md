@@ -102,7 +102,7 @@ All the datasets required for other related problems are provided with the repos
      
 ### Acknowledgement
 
-I would like to thank Arcot Soumya and her team for supporting us with the materials and knowledge required to learn Machine Vision.
+I would like to thank Arcot Soumya and her team for supporting me with the materials and the knowledge required to learn Machine Vision.
         
     
 
