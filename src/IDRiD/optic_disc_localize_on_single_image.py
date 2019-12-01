@@ -83,14 +83,15 @@ cropped_image = image_copy[y0:y1, x0:x1]
 # Apply pre-processing on the retrieved optic disc image
 optic_image = cropped_image.copy()
 print(optic_image.shape)
+
 # r will remove the blood vessels in the optic disc
 b, g, r = cv2.split(cropped_image)
 blur = cv2.GaussianBlur(r, (5, 5), 5)
 weighted_image = cv2.addWeighted(r, 1.6, blur, -0.5, 0)
 diluted_image = cv2.dilate(weighted_image, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (31, 31)), iterations=1)
 eroded_image = cv2.erode(diluted_image, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (31, 31)), iterations=3)
-# th = cv2.adaptiveThreshold(eroded_image, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 115, 1)
-# preprocessed_image = cv2.equalizeHist(eroded_image)
+
+# Apply thresholding on the eroded image
 ret_val, th = cv2.threshold(eroded_image, 250, 255, cv2.THRESH_BINARY)
 
 canny_edge = canny(th, 0.20)

@@ -1,3 +1,5 @@
+# Logic to the code is written by sboosi
+
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
@@ -11,14 +13,10 @@ def canny(img, sigma):
 
 
 def jaccard_score(input, target, epsilon=1e-6):
-    # To avoid zero in the numerator
-    # smooth = 1
     input = input.reshape(-1)
-    # print('Input dice', input.size())
     target = target.reshape(-1)
-    # print('Target dice', target.size())
 
-    # Compute dice
+    # Compute jaccard
     intersect = (input * target).sum()
     union = input.sum() + target.sum()
 
@@ -26,12 +24,8 @@ def jaccard_score(input, target, epsilon=1e-6):
 
 
 def dice_score(input, target, epsilon=1e-6):
-    # To avoid zero in the numerator
-    # smooth = 1
     input = input.reshape(-1)
-    # print('Input dice', input.size())
     target = target.reshape(-1)
-    # print('Target dice', target.size())
 
     # Compute dice
     intersect = (input * target).sum()
